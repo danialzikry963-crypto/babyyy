@@ -1,193 +1,194 @@
-
 <!DOCTYPE html>
 <html lang="ms">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Admin Sayang Eats 💗</title>
-
+<title>Admin Sayang Space</title>
 <style>
+:root{--pink:#f7a9c4;--deep:#a83c68;--bg:#fff7fa;--ink:#49313b;--muted:#8a737e;--line:#f2dce5;--new:#e44d79}
 *{box-sizing:border-box}
-body{
-  margin:0;padding:18px;font-family:Arial,sans-serif;
-  background:#fff5f8;color:#482b39
-}
-.container{max-width:900px;margin:auto}
-header{
-  text-align:center;background:#ffdce8;padding:25px 15px;
-  border-radius:22px;margin-bottom:18px
-}
-h1,h2,h3{color:#a83268}
-header h1{margin:0 0 8px}
-header p{margin:0;color:#704257}
-.status,.section{
-  background:white;border:1px solid #f2c8d8;
-  border-radius:17px;padding:16px;margin-bottom:18px
-}
-.section{box-shadow:0 4px 15px #e8bdcc30}
-.section h2{margin-top:0}
-button{
-  border:0;border-radius:12px;padding:12px 17px;
-  background:#c94f83;color:white;cursor:pointer;
-  font-size:14px;margin-bottom:18px
-}
-.item{
-  background:#fff5f8;border:1px solid #f4d6e1;
-  border-radius:13px;padding:14px;margin:10px 0;
-  overflow-wrap:anywhere
-}
-.item h3{font-size:15px;margin:0 0 8px}
-.item p{white-space:pre-wrap;line-height:1.5;margin:7px 0}
-.small{font-size:12px;color:#876778}
-.empty{text-align:center;color:#876778;padding:15px 5px}
-footer{text-align:center;color:#876778;font-size:12px;padding:15px}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+header{background:linear-gradient(135deg,#f8b8ce,#ffe1eb);padding:18px 16px 16px;border-bottom:1px solid var(--line)}
+.head{max-width:850px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
+h1{font-size:21px;margin:0 0 4px} .sub{font-size:12px;color:#795765}
+.pill{background:#fff;border:1px solid #f0c6d7;border-radius:999px;padding:7px 10px;font-size:12px;white-space:nowrap}
+main{max-width:850px;margin:16px auto;padding:0 12px 28px}
+.status{font-size:12px;color:var(--muted);margin:0 2px 12px}
+.tabs{display:flex;gap:7px;overflow-x:auto;padding:2px 0 12px}
+.tab{border:1px solid var(--line);background:white;color:var(--deep);border-radius:999px;padding:8px 12px;font-weight:650;font-size:12px;cursor:pointer;white-space:nowrap}
+.tab.active{background:var(--deep);color:white;border-color:var(--deep)}
+.toolbar{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px}
+.toolbar h2{font-size:15px;margin:0}
+.smallbtn{border:1px solid var(--line);background:white;color:var(--deep);border-radius:9px;padding:7px 10px;font-size:11px;cursor:pointer}
+.list{display:grid;gap:9px}
+.item{background:#fff;border:1px solid var(--line);border-radius:13px;padding:12px 13px;box-shadow:0 3px 12px #9e47600a;cursor:pointer}
+.item:active{transform:scale(.997)}
+.top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+.itemtitle{font-weight:750;font-size:13px;overflow-wrap:anywhere}
+.when{font-size:10px;color:var(--muted);white-space:nowrap;margin-top:2px}
+.badges{display:flex;gap:5px;align-items:center;flex-shrink:0}
+.new{background:var(--new);color:white;font-weight:800;font-size:9px;letter-spacing:.4px;padding:3px 6px;border-radius:999px}
+.kind{font-size:9px;background:#fff0f5;color:var(--deep);padding:3px 6px;border-radius:999px}
+.detail{font-size:12px;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere;margin-top:7px}
+.itemfoot{display:flex;justify-content:flex-end;margin-top:7px}
+.readhint{font-size:10px;color:#a18c96}
+.empty,.error{background:white;border:1px dashed var(--line);border-radius:13px;padding:20px;text-align:center;font-size:12px;color:var(--muted);line-height:1.6}
+.error{color:#a02c50;text-align:left}
+@media(min-width:620px){.list{grid-template-columns:repeat(2,minmax(0,1fr))}.item{padding:13px}}
 </style>
 </head>
-
 <body>
-<main class="container">
-<header>
-  <h1>💗 Sayang Eats</h1>
-  <p>Dashboard Admin — Ruang Khas Untuk Sayang 🌷</p>
-</header>
-
-<div class="status" id="status">
-  🔄 Sedang menyambung ke Firebase...
+<header><div class="head"><div><h1>🌷 Admin Sayang Space</h1><div class="sub">Ringkasan pilihan makan & luahan sayang</div></div><div class="pill" id="newCount">0 baru</div></div></header>
+<main>
+<p class="status" id="status">Sedang sambung ke Firebase…</p>
+<div class="tabs">
+<button class="tab active" data-tab="all">✨ Semua</button>
+<button class="tab" data-tab="foodChoices">🍜 Pilihan makan</button>
+<button class="tab" data-tab="emotions">💗 Emosi</button>
+<button class="tab" data-tab="feelings">💌 Luahan</button>
 </div>
-
-<button id="refreshBtn">↻ Muat Semula</button>
-
-<section class="section">
-  <h2>🍜 Pilihan Makanan</h2>
-  <div id="foodList"><p class="empty">Memuatkan data...</p></div>
-</section>
-
-<section class="section">
-  <h2>💗 Pilihan Perasaan</h2>
-  <div id="emotionList"><p class="empty">Memuatkan data...</p></div>
-</section>
-
-<section class="section">
-  <h2>📝 Ruang Luahan</h2>
-  <div id="feelingList"><p class="empty">Memuatkan data...</p></div>
-</section>
-
-<footer>Dibuat dengan penuh kasih sayang 💕</footer>
+<div class="toolbar"><h2 id="sectionTitle">Semua kiriman</h2><button class="smallbtn" id="markAll">Tanda semua dibaca</button></div>
+<div class="list" id="list"><div class="empty">Memuatkan data…</div></div>
 </main>
-
 <script type="module">
-const statusBox = document.getElementById("status");
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-function showError(message) {
-  statusBox.textContent = "❌ " + message;
+/* Gunakan apiKey dan config yang sama seperti dalam index.html */
+const firebaseConfig = {
+  apiKey: "AIzaSyDSFvZ3JtqTB7HP85WyRa5dka9VRUJdKDU",
+  authDomain: "baby-7eec4.firebaseapp.com",
+  databaseURL: "https://baby-7eec4-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "baby-7eec4",
+  storageBucket: "baby-7eec4.firebasestorage.app",
+  messagingSenderId: "824621868036",
+  appId: "1:824621868036:web:870a7c66e9311fb77ec151"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const paths = ["foodChoices","emotions","feelings"];
+const titles = {all:"Semua kiriman",foodChoices:"Pilihan makan",emotions:"Emosi",feelings:"Luahan"};
+let activeTab = "all";
+let records = [];
+let readIds = new Set(JSON.parse(localStorage.getItem("sayangAdminReadIds") || "[]"));
+let loaded = new Set();
+const list = document.getElementById("list");
+const statusEl = document.getElementById("status");
+const newCount = document.getElementById("newCount");
+
+function safeString(v){
+  if(v === null || v === undefined) return "";
+  if(typeof v === "string") return v;
+  if(typeof v === "number" || typeof v === "boolean") return String(v);
+  return "";
 }
-
-function makeText(tag, text, className = "") {
-  const el = document.createElement(tag);
-  el.textContent = text;
-  if (className) el.className = className;
-  return el;
+function firstValue(obj, keys){
+  for(const key of keys){ if(obj && obj[key] !== undefined && obj[key] !== null && obj[key] !== "") return obj[key]; }
+  return null;
 }
-
-function renderData(container, data, title) {
-  container.replaceChildren();
-
-  if (!data || typeof data !== "object" ||
-      Object.keys(data).length === 0) {
-    container.append(
-      makeText("p", "Belum ada data untuk dipaparkan.", "empty")
-    );
+function timeValue(obj){
+  const raw = firstValue(obj, ["timestamp","createdAt","created_at","time","date","sentAt","submittedAt"]);
+  if(raw === null) return 0;
+  if(typeof raw === "number") return raw < 1000000000000 ? raw*1000 : raw;
+  const n = Number(raw);
+  if(Number.isFinite(n) && n > 0) return n < 1000000000000 ? n*1000 : n;
+  const parsed = Date.parse(raw);
+  return Number.isNaN(parsed) ? 0 : parsed;
+}
+function formatTime(ms){
+  if(!ms) return "Masa tidak direkod";
+  return new Intl.DateTimeFormat("ms-MY",{day:"2-digit",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit"}).format(new Date(ms));
+}
+function textFor(obj){
+  if(typeof obj === "string" || typeof obj === "number") return String(obj);
+  if(!obj || typeof obj !== "object") return "Kiriman baharu";
+  const preferred = ["food","foodName","menu","choice","selectedFood","makanan","message","text","feeling","luahan","description","note","emotion","mood","name"];
+  const lines = [];
+  for(const k of preferred){
+    const v = obj[k];
+    if(v !== undefined && v !== null && (typeof v === "string" || typeof v === "number") && String(v).trim()){
+      const labels = {food:"Makanan",foodName:"Makanan",menu:"Menu",choice:"Pilihan",selectedFood:"Makanan",makanan:"Makanan",message:"Mesej",text:"Mesej",feeling:"Luahan",luahan:"Luahan",description:"Catatan",note:"Catatan",emotion:"Emosi",mood:"Mood",name:"Nama"};
+      lines.push((labels[k] || k) + ": " + String(v));
+    }
+  }
+  if(!lines.length){
+    for(const [k,v] of Object.entries(obj)){
+      if(v !== null && v !== undefined && !["timestamp","createdAt","created_at","time","date","sentAt","submittedAt"].includes(k) && (typeof v === "string" || typeof v === "number" || typeof v === "boolean")){
+        lines.push(k.replace(/([A-Z])/g," $1") + ": " + String(v));
+      }
+    }
+  }
+  return lines.length ? lines.join("\n") : "Kiriman diterima";
+}
+function saveRead(){ localStorage.setItem("sayangAdminReadIds", JSON.stringify([...readIds])); }
+function render(){
+  const filtered = records.filter(r => activeTab === "all" || r.path === activeTab).sort((a,b)=>b.ms-a.ms);
+  const unread = records.filter(r => !readIds.has(r.id)).length;
+  newCount.textContent = `${unread} baru`;
+  document.getElementById("sectionTitle").textContent = titles[activeTab];
+  if(!filtered.length){
+    list.innerHTML = '<div class="empty">Belum ada data untuk bahagian ini.<br>Kalau data memang sudah dihantar, semak sama ada nama laluan Firebase dalam index.html sama.</div>';
     return;
   }
-
-  Object.entries(data).reverse().forEach(([key, value]) => {
+  list.replaceChildren();
+  for(const r of filtered){
     const card = document.createElement("article");
     card.className = "item";
-    card.append(makeText("h3", title));
-
-    if (value && typeof value === "object") {
-      Object.entries(value).forEach(([field, fieldValue]) => {
-        let display;
-        try {
-          display = typeof fieldValue === "object"
-            ? JSON.stringify(fieldValue, null, 2)
-            : String(fieldValue ?? "—");
-        } catch {
-          display = String(fieldValue);
-        }
-
-        card.append(makeText("p", field + ": " + display));
-      });
-    } else {
-      card.append(makeText("p", String(value ?? "—")));
-    }
-
-    card.append(makeText("p", "ID: " + key, "small"));
-    container.append(card);
-  });
-}
-
-document.getElementById("refreshBtn").onclick = () => location.reload();
-
-async function startAdmin() {
-  try {
-    const { initializeApp } = await import(
-      "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"
-    );
-    const { getDatabase, ref, onValue } = await import(
-      "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js"
-    );
-
-    /*
-      PENTING:
-      Gantikan keseluruhan config di bawah dengan
-      config sebenar daripada index.html kau.
-    */
-    const firebaseConfig = {
-        apiKey: "AIzaSyDSFvZ3JtqTB7HP85WyRa5dka9VRUJdKDU",
-      authDomain: "baby-7eec4.firebaseapp.com",
-      databaseURL: "https://baby-7eec4-default-rtdb.asia-southeast1.firebasedatabase.app",
-      projectId: "baby-7eec4"
-    };
-
-    if (firebaseConfig.apiKey === "GANTI_DENGAN_API_KEY_SEBENAR") {
-      showError("Masukkan apiKey sebenar daripada index.html.");
-      return;
-    }
-
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
-
-    onValue(ref(db, ".info/connected"), snapshot => {
-      statusBox.textContent = snapshot.val()
-        ? "🟢 Firebase bersambung."
-        : "🟠 Menunggu sambungan Firebase...";
-    }, error => showError(error.message));
-
-    const lists = [
-      ["foodChoices", "foodList", "🍜 Rekod Makanan"],
-      ["emotions", "emotionList", "💗 Rekod Perasaan"],
-      ["feelings", "feelingList", "📝 Rekod Luahan"]
-    ];
-
-    lists.forEach(([path, elementId, title]) => {
-      const container = document.getElementById(elementId);
-
-      onValue(ref(db, path), snapshot => {
-        renderData(container, snapshot.val(), title);
-      }, error => {
-        container.replaceChildren(
-          makeText("p", "Gagal membaca data: " + error.message, "empty")
-        );
-      });
-    });
-  } catch (error) {
-    console.error(error);
-    showError("Firebase gagal dimulakan: " + error.message);
+    card.setAttribute("role","button");
+    card.tabIndex = 0;
+    const top = document.createElement("div"); top.className = "top";
+    const left = document.createElement("div");
+    const title = document.createElement("div"); title.className = "itemtitle"; title.textContent = r.title;
+    const when = document.createElement("div"); when.className = "when"; when.textContent = formatTime(r.ms);
+    left.append(title,when);
+    const badges = document.createElement("div"); badges.className = "badges";
+    if(!readIds.has(r.id)){ const b = document.createElement("span"); b.className = "new"; b.textContent = "NEW"; badges.append(b); }
+    const kind = document.createElement("span"); kind.className = "kind"; kind.textContent = r.label; badges.append(kind);
+    top.append(left,badges);
+    const detail = document.createElement("div"); detail.className = "detail"; detail.textContent = r.detail;
+    const foot = document.createElement("div"); foot.className = "itemfoot";
+    const hint = document.createElement("span"); hint.className = "readhint"; hint.textContent = readIds.has(r.id) ? "Sudah dibaca" : "Tekan untuk tanda dibaca";
+    foot.append(hint); card.append(top,detail,foot);
+    const markRead = () => { readIds.add(r.id); saveRead(); render(); };
+    card.addEventListener("click",markRead);
+    card.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();markRead();}});
+    list.append(card);
   }
 }
-
-startAdmin();
+function ingest(path, value){
+  const arr = [];
+  if(value && typeof value === "object"){
+    for(const [key,obj] of Object.entries(value)){
+      const id = path + ":" + key;
+      arr.push({
+        id, path,
+        label: path === "foodChoices" ? "MAKAN" : path === "emotions" ? "EMOSI" : "LUAHAN",
+        title: path === "foodChoices" ? "🍜 Pilihan makan" : path === "emotions" ? "💗 Emosi" : "💌 Luahan",
+        detail: textFor(obj),
+        ms: timeValue(obj)
+      });
+    }
+  }
+  records = records.filter(r=>r.path!==path).concat(arr);
+  loaded.add(path);
+  statusEl.textContent = loaded.size === paths.length ? "🟢 Firebase disambungkan • Masa dipaparkan mengikut data yang tersedia" : "Sedang memuatkan data…";
+  render();
+}
+for(const path of paths){
+  onValue(ref(db,path), snap => ingest(path,snap.val()), err => {
+    statusEl.textContent = "Ralat Firebase: " + err.message + " — semak konfigurasi dan Database Rules.";
+    list.innerHTML = '<div class="error"></div>';
+    list.firstElementChild.textContent = statusEl.textContent;
+  });
+}
+document.querySelectorAll(".tab").forEach(btn=>btn.addEventListener("click",()=>{
+  document.querySelectorAll(".tab").forEach(b=>b.classList.toggle("active",b===btn));
+  activeTab=btn.dataset.tab; render();
+}));
+document.getElementById("markAll").addEventListener("click",()=>{
+  records.forEach(r=>readIds.add(r.id)); saveRead(); render();
+});
 </script>
 </body>
 </html>
