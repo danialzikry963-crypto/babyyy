@@ -14,6 +14,9 @@
   <link rel="manifest" href="manifest.json">
 
   <title>BABY ♡</title>
+  
+  >
+</div>
 
   <style>
 
@@ -173,45 +176,32 @@
        PHOTO
     ========================= */
 
-    .photo-card {
-      background: white;
+   .photo-card {
+  width: 100%;
+  max-width: 360px;
+  margin: 20px auto 25px;
+  padding: 10px 10px 18px;
+  background: white;
+  border-radius: 22px;
+  box-shadow: 0 12px 35px rgba(80, 40, 60, 0.13);
+  overflow: hidden;
+}
 
-      padding:
-        10px
-        10px
-        20px;
+.photo-card img {
+  display: block;
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 15px;
+}
 
-      border-radius: 22px;
-
-      box-shadow:
-        0 12px 35px
-        rgba(80, 40, 60, 0.13);
-
-      transform: rotate(-1deg);
-
-      margin-bottom: 25px;
-    }
-
-    .photo-card img {
-      width: 100%;
-
-      aspect-ratio: 4 / 3;
-
-      object-fit: cover;
-
-      border-radius: 15px;
-
-      display: block;
-    }
-
-    .photo-caption {
-      margin-top: 12px;
-
-      color: #81717a;
-
-      font-size: 13px;
-    }
-
+.photo-caption {
+  margin-top: 12px;
+  text-align: center;
+  color: #81717a;
+  font-size: 13px;
+}
     /* =========================
        GREETING
     ========================= */
@@ -1034,7 +1024,27 @@
     body.dark .back-btn { color: #f8eef3; }
     body.dark .subtitle, body.dark .page-subtitle, body.dark .small,
     body.dark .greeting, body.dark .status { color: #d8c4ce; }
+.couple-photo-wrap {
+  width: 100%;
+  max-width: 340px;
+  margin: 20px auto;
+  padding: 10px;
+  box-sizing: border-box;
+  overflow: hidden;
+  border-radius: 24px;
+  background: #ffe4ef;
+  box-shadow: 0 6px 20px rgba(220, 100, 150, 0.18);
+}
 
+.couple-photo {
+  display: block;
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 18px;
+  box-sizing: border-box;
+}
   </style>
 </head>
 
@@ -1059,12 +1069,12 @@
 
 
     <h1>
-      Sayang Space
+      BABY
     </h1>
 
 
     <div class="subtitle">
-      A little place just for you 🤍
+    
     </div>
 
 
@@ -1074,38 +1084,23 @@
       id="greeting"
       class="greeting">
 
-      Good day 🤍
+    
 
     </div>
 
 
     <!-- PHOTO -->
 
-    <div class="photo-card">
-
-      <!--
-        LETAK GAMBAR KAU + DIA DI:
-
-        images/couple.jpg
-
-        Kalau nama gambar lain,
-        tukar "couple.jpg" dekat bawah.
-      -->
-
-      <img
-        src="images/couple.jpg"
-        alt="Our photo"
-        onerror="
-          this.src='https://placehold.co/800x600/fff7fa/9a8991?text=Your+Photo+Here'
-        "
-      >
-
-
-      <div class="photo-caption">
-        One picture, many memories 🤍
-      </div>
-
-    </div>
+    <!-- PHOTO -->
+<div class="photo-card">
+  <img
+    src="./images/couple.jpg"
+    alt="Gambar kita berdua"
+  >
+  <div class="photo-caption">
+    My favourite person ❤️
+  </div>
+</div>
 
 
     <!-- QUOTE -->
@@ -1116,18 +1111,14 @@
         id="randomQuote"
         class="quote">
 
-        Apa pun yang awak rasa hari ni,
-        tak perlu paksa diri untuk okay
-        setiap masa. ❤️
+        
 
       </div>
 
 
       <div class="small">
 
-        Rehat bila penat.
-        Luahkan bila berat.
-        One little step at a time.
+    
 
       </div>
 
@@ -1155,7 +1146,7 @@
         </div>
 
         <div class="menu-name">
-          Makan
+          Mamam
         </div>
 
       </button>
@@ -1234,12 +1225,12 @@
 
 
     <h1 class="page-title">
-      🍽️ What to Eat?
+      🍽️ What do you want sayang ?
     </h1>
 
 
     <div class="page-subtitle">
-      Pick something you feel like eating ❤️
+      Pick something baby
     </div>
 
 
@@ -1247,26 +1238,27 @@
 
 
       <button class="food-btn" onclick="openFoodModal('🍚 Rice')">
-        <img class="food-photo" src="https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=500&q=80" alt="Rice" onerror="this.style.display='none'">
         🍚 Rice
+        
       </button>
 
 
       <button class="food-btn" onclick="openFoodModal('🍜 Noodles')">
-        <img class="food-photo" src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=500&q=80" alt="Noodles" onerror="this.style.display='none'">
         🍜 Noodles
+        
       </button>
 
 
       <button class="food-btn" onclick="openFoodModal('🍔 Burger')">
-        <img class="food-photo" src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=500&q=80" alt="Burger" onerror="this.style.display='none'">
+        
         🍔 Burger
       </button>
 
 
       <button class="food-btn" onclick="openFoodModal('🍕 Pizza')">
-        <img class="food-photo" src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=500&q=80" alt="Pizza" onerror="this.style.display='none'">
+
         🍕 Pizza
+        
       </button>
 
 
@@ -1329,9 +1321,9 @@
 
     <button
       class="random-food"
-      onclick="openFoodModal('🤷 Tak tahu nak makan apa')">
+      onclick="openFoodModal('Tak tahu nak mamam apa')">
 
-      🤷 Tak tahu nak makan apa
+      Tak tahu nak mamam apa
 
     </button>
 
@@ -1377,12 +1369,12 @@
 
 
     <h1 class="page-title">
-      🥹 How are you feeling?
+       How are you feeling?
     </h1>
 
 
     <div class="page-subtitle">
-      Pick the emotion closest to you right now.
+      
     </div>
 
 
@@ -1511,14 +1503,14 @@
 
       <button
         class="emotion-btn"
-        onclick="selectEmotion('🤍','Need Someone')">
+        onclick="selectEmotion('🤍','Need you')">
 
         <div class="emotion-icon">
           🤍
         </div>
 
         <div class="emotion-name">
-          Someone
+          Need you baby
         </div>
 
       </button>
@@ -1581,7 +1573,7 @@
 
 
     <div class="page-subtitle">
-      Write whatever is on your mind.
+      Write whatever is on your mind baby
     </div>
 
 
@@ -1590,7 +1582,7 @@
 
       <textarea
         id="feelingText"
-        placeholder="Tulis apa yang awak rasa dekat sini...">
+        placeholder="">
       </textarea>
 
 
@@ -1743,7 +1735,7 @@
       🍽️
     </span>
 
-    Makan
+    Mamam
 
   </button>
 
@@ -1811,14 +1803,14 @@
 
 
     <p>
-      Nak macam mana?
+     kamu nak mamam apa sayang ?
     </p>
 
 
     <input
       id="foodSpecification"
       type="text"
-      placeholder="Contoh: spicy, cheese, less spicy...">
+      placeholder="">
 
 
     <div class="modal-buttons">
@@ -1986,17 +1978,17 @@ setGreeting();
 
 const quotes = [
 
-  "Apa pun yang awak rasa hari ni, tak perlu paksa diri untuk okay setiap masa. ❤️",
+  "I love you baby ucuk acam ❤️",
 
-  "Tak apa kalau hari ni tak sempurna. Awak dah buat yang terbaik. 🤍",
+  "you dont have to face it alone sayang 🤍",
 
-  "Rehat bukan bermaksud mengalah. Kadang-kadang kita cuma perlukan masa. 🌷",
+  "baby cumil saya okiey ker harini ? 🌷",
 
-  "Satu perkara pada satu masa. Tak perlu selesaikan semuanya hari ni. 🤍",
+  "Hai baby ucuk acam cayeee 🤍",
 
-  "Kalau hari ni terasa berat, ambil nafas dan perlahan sedikit. 🫂",
+  "sayang kamu babyyyy ",
 
-  "Perasaan awak tetap valid walaupun susah untuk dijelaskan. 🤍"
+  "i miss you babyyyyy 🤍"
 
 ];
 
@@ -2174,31 +2166,31 @@ if (savedFood) {
 const emotionMessages = {
 
   Happy:
-    "You're feeling happy today. Keep that little smile ❤️",
+    "",
 
   Loved:
-    "You deserve to feel loved and appreciated. 🤍",
+    "",
 
   Sad:
-    "It's okay to have a sad day. Take things slowly. 🤍",
+    "",
 
   Tired:
-    "Rest is okay. You don't have to do everything at once. 🫂",
+    "",
 
   Angry:
-    "Take a breath and give yourself some space. 🤍",
+    "",
 
   "Need Attention":
-    "Sometimes we just need a little attention and comfort. 🥺",
+    "",
 
   Blank:
-    "You don't always need to know what you're feeling. Take your time. 🤍",
+    "",
 
   Calm:
-    "Enjoy this peaceful moment. You deserve it. 😌",
+    "",
 
   "Need Someone":
-    "You don't have to keep everything to yourself. 🤍"
+    ""
 
 };
 
@@ -2346,7 +2338,7 @@ async function sendFeeling() {
 
 
     status.textContent =
-      "Dah dihantar ❤️";
+      "";
 
   }
 
