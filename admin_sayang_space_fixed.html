@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fff5f8">
+  <title>Admin Sayang Space 💗</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; padding: 18px; font-family: Arial, sans-serif;
+      background: #fff5f8; color: #482b39;
+    }
+    .container { max-width: 900px; margin: auto; }
+    header {
+      text-align: center; background: #ffdce8; padding: 24px 15px;
+      border-radius: 22px; margin-bottom: 18px;
+    }
+    header h1 { margin: 0 0 8px; color: #a83268; }
+    header p { margin: 0; color: #704257; }
+    .status, .section {
+      background: #fff; border: 1px solid #f2c8d8;
+      padding: 16px; border-radius: 17px; margin-bottom: 18px;
+    }
+    .section { box-shadow: 0 4px 15px #e8bdcc30; }
+    .section h2 { color: #a83268; margin-top: 0; }
+    button {
+      background: #c94f83; color: #fff; border: 0; border-radius: 12px;
+      padding: 12px 18px; font-size: 14px; cursor: pointer; margin-bottom: 18px;
+    }
+    .item {
+      background: #fff5f8; border: 1px solid #f4d6e1; border-radius: 14px;
+      padding: 14px; margin: 10px 0; overflow-wrap: anywhere;
+    }
+    .item h3 { color: #a83268; margin: 0 0 8px; font-size: 15px; }
+    .item p { margin: 7px 0; line-height: 1.5; white-space: pre-wrap; }
+    .small { color: #876778; font-size: 12px; }
+    .empty { color: #876778; text-align: center; padding: 18px 5px; }
+    footer { text-align: center; color: #876778; font-size: 12px; padding: 15px; }
+    body.dark { background: #171317; color: #f8eef3; }
+    body.dark .status, body.dark .section { background: #241e24; border-color: #453a43; }
+    body.dark .item { background: #1c181c; border-color: #453a43; }
+    body.dark h2, body.dark .item h3 { color: #f3a9c8; }
+    body.dark .empty, body.dark .small { color: #d8c4ce; }
+  </style>
+</head>
+<body>
+<main class="container">
+  <header>
+    <h1>💗 Sayang Space</h1>
+    <p>Dashboard Admin — Ruang Khas Untuk Sayang 🌷</p>
+  </header>
+
+  <div class="status" id="status">🔄 Sedang menyambung ke Firebase...</div>
+  <button id="refreshBtn" type="button">↻ Muat Semula</button>
+
+  <section class="section">
+    <h2>🍜 Pilihan Makanan</h2>
+    <div id="foodList"><p class="empty">Memuatkan data...</p></div>
+  </section>
+
+  <section class="section">
+    <h2>💗 Pilihan Perasaan</h2>
+    <div id="emotionList"><p class="empty">Memuatkan data...</p></div>
+  </section>
+
+  <section class="section">
+    <h2>📝 Ruang Luahan</h2>
+    <div id="feelingList"><p class="empty">Memuatkan data...</p></div>
+  </section>
+  <footer>Dibuat dengan penuh kasih sayang 💕</footer>
+</main>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+  import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-database.js";
+
+  // Config ini dipadankan dengan config yang terdapat dalam index.html yang dihantar.
+  const firebaseConfig = {
+    apiKey: "AIzaSyDSFvZ3JtqTB7HP85WyRa5dka9VRUJdKDU",
+    authDomain: "baby-7eec4.firebaseapp.com",
+    databaseURL: "https://baby-7eec4-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "baby-7eec4",
+    storageBucket: "baby-7eec4.firebasestorage.app",
+    messagingSenderId: "824621868036",
+    appId: "1:824621868036:web:870a7c66e9311fb77ec151"
+  };
+
+  const statusBox = document.getElementById("status");
+  const sections = {
+    foodChoices: { el: document.getElementById("foodList"), title: "🍜 Rekod Makanan" },
+    emotions: { el: document.getElementById("emotionList"), title: "💗 Rekod Perasaan" },
+    feelings: { el: document.getElementById("feelingList"), title: "📝 Rekod Luahan" }
+  };
+
+  function makeText(tag, text, className = "") {
+    const el = document.createElement(tag);
+    el.textContent = text;
+    if (className) el.className = className;
+    return el;
+  }
+
+  function displayValue(value) {
+    if (value === null || value === undefined || value === "") return "—";
+    if (typeof value === "object") return JSON.stringify(value, null, 2);
+    if (typeof value === "number" && value > 1000000000000) {
+      const date = new Date(value);
+      if (!Number.isNaN(date.getTime())) return date.toLocaleString("ms-MY");
+    }
+    return String(value);
+  }
+
+  function renderData(container, data, title) {
+    container.replaceChildren();
+
+    if (!data || typeof data !== "object" || Object.keys(data).length === 0) {
+      container.append(makeText("p", "Belum ada data untuk dipaparkan.", "empty"));
+      return;
+    }
+
+    Object.entries(data).reverse().forEach(([key, value]) => {
+      const card = document.createElement("article");
+      card.className = "item";
+      card.append(makeText("h3", title));
+
+      if (value && typeof value === "object" && !Array.isArray(value)) {
+        Object.entries(value).forEach(([field, fieldValue]) => {
+          const label = field.replace(/([A-Z])/g, " $1").replace(/[_-]/g, " ");
+          card.append(makeText("p", label.charAt(0).toUpperCase() + label.slice(1) + ": " + displayValue(fieldValue)));
+        });
+      } else {
+        card.append(makeText("p", displayValue(value)));
+      }
+
+      card.append(makeText("p", "ID rekod: " + key, "small"));
+      container.append(card);
+    });
+  }
+
+  document.getElementById("refreshBtn").addEventListener("click", () => location.reload());
+
+  try {
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    onValue(ref(db, ".info/connected"), snapshot => {
+      statusBox.textContent = snapshot.val() === true
+        ? "🟢 Firebase bersambung. Data dikemas kini secara langsung."
+        : "🟠 Menunggu sambungan Firebase...";
+    }, error => {
+      statusBox.textContent = "❌ Status sambungan: " + error.message;
+    });
+
+    Object.entries(sections).forEach(([path, section]) => {
+      onValue(ref(db, path), snapshot => {
+        renderData(section.el, snapshot.val(), section.title);
+      }, error => {
+        section.el.replaceChildren(makeText("p", "Gagal membaca data: " + error.message, "empty"));
+        statusBox.textContent = "❌ Firebase: " + error.message + " — semak Database Rules/akses.";
+      });
+    });
+  } catch (error) {
+    console.error(error);
+    statusBox.textContent = "❌ Firebase gagal dimulakan: " + error.message;
+  }
+</script>
+</body>
+</html>
