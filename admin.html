@@ -2,329 +2,192 @@
 <!DOCTYPE html>
 <html lang="ms">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Sayang Eats 💗</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin Sayang Eats 💗</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      padding: 20px;
-      font-family: Arial, sans-serif;
-      background: #fff5f8;
-      color: #482b39;
-    }
-
-    .container {
-      max-width: 900px;
-      margin: auto;
-    }
-
-    header {
-      text-align: center;
-      background: #ffdce8;
-      padding: 25px 15px;
-      border-radius: 24px;
-      margin-bottom: 20px;
-    }
-
-    header h1 {
-      margin: 0 0 8px;
-      color: #a83268;
-    }
-
-    header p {
-      margin: 0;
-      color: #704257;
-    }
-
-    .status {
-      background: white;
-      border: 1px solid #f2c8d8;
-      padding: 13px;
-      border-radius: 14px;
-      margin-bottom: 20px;
-      font-size: 14px;
-    }
-
-    .section {
-      background: white;
-      padding: 18px;
-      border-radius: 20px;
-      margin-bottom: 20px;
-      box-shadow: 0 4px 15px #e8bdcc55;
-    }
-
-    .section h2 {
-      color: #a83268;
-      margin-top: 0;
-    }
-
-    .item {
-      background: #fff5f8;
-      border: 1px solid #f4d6e1;
-      border-radius: 14px;
-      padding: 15px;
-      margin: 12px 0;
-      overflow-wrap: anywhere;
-    }
-
-    .item h3 {
-      color: #a83268;
-      margin: 0 0 10px;
-      font-size: 16px;
-    }
-
-    .item p {
-      margin: 7px 0;
-      line-height: 1.6;
-      white-space: pre-wrap;
-    }
-
-    .time {
-      color: #876778;
-      font-size: 12px;
-      margin-top: 10px;
-    }
-
-    .empty {
-      color: #876778;
-      text-align: center;
-      padding: 20px 5px;
-    }
-
-    .refresh {
-      background: #c94f83;
-      color: white;
-      border: none;
-      border-radius: 12px;
-      padding: 12px 18px;
-      font-size: 14px;
-      cursor: pointer;
-      margin-bottom: 18px;
-    }
-
-    .refresh:hover {
-      background: #a83268;
-    }
-
-    footer {
-      text-align: center;
-      color: #876778;
-      font-size: 12px;
-      padding: 15px;
-    }
-  </style>
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;padding:18px;font-family:Arial,sans-serif;
+  background:#fff5f8;color:#482b39
+}
+.container{max-width:900px;margin:auto}
+header{
+  text-align:center;background:#ffdce8;padding:25px 15px;
+  border-radius:22px;margin-bottom:18px
+}
+h1,h2,h3{color:#a83268}
+header h1{margin:0 0 8px}
+header p{margin:0;color:#704257}
+.status,.section{
+  background:white;border:1px solid #f2c8d8;
+  border-radius:17px;padding:16px;margin-bottom:18px
+}
+.section{box-shadow:0 4px 15px #e8bdcc30}
+.section h2{margin-top:0}
+button{
+  border:0;border-radius:12px;padding:12px 17px;
+  background:#c94f83;color:white;cursor:pointer;
+  font-size:14px;margin-bottom:18px
+}
+.item{
+  background:#fff5f8;border:1px solid #f4d6e1;
+  border-radius:13px;padding:14px;margin:10px 0;
+  overflow-wrap:anywhere
+}
+.item h3{font-size:15px;margin:0 0 8px}
+.item p{white-space:pre-wrap;line-height:1.5;margin:7px 0}
+.small{font-size:12px;color:#876778}
+.empty{text-align:center;color:#876778;padding:15px 5px}
+footer{text-align:center;color:#876778;font-size:12px;padding:15px}
+</style>
 </head>
 
 <body>
-  <main class="container">
+<main class="container">
+<header>
+  <h1>💗 Sayang Eats</h1>
+  <p>Dashboard Admin — Ruang Khas Untuk Sayang 🌷</p>
+</header>
 
-    <header>
-      <h1>💗 Sayang Eats</h1>
-      <p>Dashboard Admin — Ruang Khas Untuk Sayang 🌷</p>
-    </header>
+<div class="status" id="status">
+  🔄 Sedang menyambung ke Firebase...
+</div>
 
-    <div class="status" id="status">
-      🔄 Sedang menyambung ke Firebase...
-    </div>
+<button id="refreshBtn">↻ Muat Semula</button>
 
-    <button class="refresh" id="refreshBtn">
-      ↻ Muat Semula
-    </button>
+<section class="section">
+  <h2>🍜 Pilihan Makanan</h2>
+  <div id="foodList"><p class="empty">Memuatkan data...</p></div>
+</section>
 
-    <section class="section">
-      <h2>🍜 Pilihan Makanan</h2>
-      <div id="foodList">
-        <p class="empty">Memuatkan data...</p>
-      </div>
-    </section>
+<section class="section">
+  <h2>💗 Pilihan Perasaan</h2>
+  <div id="emotionList"><p class="empty">Memuatkan data...</p></div>
+</section>
 
-    <section class="section">
-      <h2>💗 Pilihan Perasaan</h2>
-      <div id="emotionList">
-        <p class="empty">Memuatkan data...</p>
-      </div>
-    </section>
+<section class="section">
+  <h2>📝 Ruang Luahan</h2>
+  <div id="feelingList"><p class="empty">Memuatkan data...</p></div>
+</section>
 
-    <section class="section">
-      <h2>📝 Ruang Luahan</h2>
-      <div id="feelingList">
-        <p class="empty">Memuatkan data...</p>
-      </div>
-    </section>
+<footer>Dibuat dengan penuh kasih sayang 💕</footer>
+</main>
 
-    <footer>
-      Dibuat dengan penuh kasih sayang 💕
-    </footer>
+<script type="module">
+const statusBox = document.getElementById("status");
 
-  </main>
+function showError(message) {
+  statusBox.textContent = "❌ " + message;
+}
 
-  <script type="module">
-    import { initializeApp }
-      from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+function makeText(tag, text, className = "") {
+  const el = document.createElement(tag);
+  el.textContent = text;
+  if (className) el.className = className;
+  return el;
+}
 
-    import {
-      getDatabase,
-      ref,
-      onValue
-    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+function renderData(container, data, title) {
+  container.replaceChildren();
+
+  if (!data || typeof data !== "object" ||
+      Object.keys(data).length === 0) {
+    container.append(
+      makeText("p", "Belum ada data untuk dipaparkan.", "empty")
+    );
+    return;
+  }
+
+  Object.entries(data).reverse().forEach(([key, value]) => {
+    const card = document.createElement("article");
+    card.className = "item";
+    card.append(makeText("h3", title));
+
+    if (value && typeof value === "object") {
+      Object.entries(value).forEach(([field, fieldValue]) => {
+        let display;
+        try {
+          display = typeof fieldValue === "object"
+            ? JSON.stringify(fieldValue, null, 2)
+            : String(fieldValue ?? "—");
+        } catch {
+          display = String(fieldValue);
+        }
+
+        card.append(makeText("p", field + ": " + display));
+      });
+    } else {
+      card.append(makeText("p", String(value ?? "—")));
+    }
+
+    card.append(makeText("p", "ID: " + key, "small"));
+    container.append(card);
+  });
+}
+
+document.getElementById("refreshBtn").onclick = () => location.reload();
+
+async function startAdmin() {
+  try {
+    const { initializeApp } = await import(
+      "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"
+    );
+    const { getDatabase, ref, onValue } = await import(
+      "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js"
+    );
 
     /*
       PENTING:
-      Gantikan konfigurasi di bawah dengan firebaseConfig
-      yang SAMA seperti dalam index.html app kau.
+      Gantikan keseluruhan config di bawah dengan
+      config sebenar daripada index.html kau.
     */
-
     const firebaseConfig = {
-      apiKey: "MASUKKAN_API_KEY_KAU",
+      apiKey: "GANTI_DENGAN_API_KEY_SEBENAR",
       authDomain: "baby-7eec4.firebaseapp.com",
       databaseURL: "https://baby-7eec4-default-rtdb.asia-southeast1.firebasedatabase.app",
       projectId: "baby-7eec4"
     };
 
-    const statusBox = document.getElementById("status");
-
-    const sections = {
-      foodChoices: document.getElementById("foodList"),
-      emotions: document.getElementById("emotionList"),
-      feelings: document.getElementById("feelingList")
-    };
-
-    // Paparkan teks dengan selamat tanpa mentafsirnya sebagai HTML.
-    function makeText(tag, text, className = "") {
-      const element = document.createElement(tag);
-      element.textContent = text;
-      if (className) element.className = className;
-      return element;
+    if (firebaseConfig.apiKey === "GANTI_DENGAN_API_KEY_SEBENAR") {
+      showError("Masukkan apiKey sebenar daripada index.html.");
+      return;
     }
 
-    function formatLabel(key) {
-      return String(key)
-        .replace(/([A-Z])/g, " $1")
-        .replace(/[_-]/g, " ")
-        .replace(/^./, c => c.toUpperCase());
-    }
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
 
-    function formatValue(value) {
-      if (value === null) return "—";
+    onValue(ref(db, ".info/connected"), snapshot => {
+      statusBox.textContent = snapshot.val()
+        ? "🟢 Firebase bersambung."
+        : "🟠 Menunggu sambungan Firebase...";
+    }, error => showError(error.message));
 
-      if (typeof value === "object") {
-        return JSON.stringify(value, null, 2);
-      }
+    const lists = [
+      ["foodChoices", "foodList", "🍜 Rekod Makanan"],
+      ["emotions", "emotionList", "💗 Rekod Perasaan"],
+      ["feelings", "feelingList", "📝 Rekod Luahan"]
+    ];
 
-      return String(value);
-    }
+    lists.forEach(([path, elementId, title]) => {
+      const container = document.getElementById(elementId);
 
-    function renderData(container, data, type) {
-      container.replaceChildren();
-
-      if (!data || typeof data !== "object") {
-        container.append(
-          makeText("p", "Belum ada data untuk dipaparkan.", "empty")
+      onValue(ref(db, path), snapshot => {
+        renderData(container, snapshot.val(), title);
+      }, error => {
+        container.replaceChildren(
+          makeText("p", "Gagal membaca data: " + error.message, "empty")
         );
-        return;
-      }
+      });
+    });
+  } catch (error) {
+    console.error(error);
+    showError("Firebase gagal dimulakan: " + error.message);
+  }
+}
 
-      const entries = Object.entries(data).reverse();
-
-      if (entries.length === 0) {
-        container.append(
-          makeText("p", "Belum ada data untuk dipaparkan.", "empty")
-        );
-        return;
-      }
-
-      for (const [key, value] of entries) {
-        const card = document.createElement("article");
-        card.className = "item";
-
-        card.append(
-          makeText("h3", type)
-        );
-
-        if (value && typeof value === "object") {
-          for (const [field, fieldValue] of Object.entries(value)) {
-            // Elakkan memaparkan metadata sebagai kandungan utama.
-            const label = formatLabel(field);
-            const p = makeText(
-              "p",
-              label + ": " + formatValue(fieldValue)
-            );
-            card.append(p);
-          }
-        } else {
-          card.append(makeText("p", formatValue(value)));
-        }
-
-        card.append(
-          makeText("p", "ID rekod: " + key, "time")
-        );
-
-        container.append(card);
-      }
-    }
-
-    let db;
-
-    try {
-      const app = initializeApp(firebaseConfig);
-      db = getDatabase(app);
-
-      let connected = false;
-
-      onValue(
-        ref(db, ".info/connected"),
-        snapshot => {
-          connected = snapshot.val() === true;
-
-          if (connected) {
-            statusBox.textContent =
-              "🟢 Disambungkan ke Firebase. Data dikemas kini secara langsung.";
-          } else {
-            statusBox.textContent =
-              "🟠 Sambungan terputus. Sedang menunggu sambungan semula...";
-          }
-        }
-      );
-
-      const pathNames = {
-        foodChoices: "🍜 Rekod Makanan",
-        emotions: "💗 Rekod Perasaan",
-        feelings: "📝 Rekod Luahan"
-      };
-
-      for (const [path, container] of Object.entries(sections)) {
-        onValue(
-          ref(db, path),
-          snapshot => {
-            renderData(container, snapshot.val(), pathNames[path]);
-          },
-          error => {
-            container.replaceChildren(
-              makeText(
-                "p",
-                "Tak dapat membaca data: " + error.message,
-                "empty"
-              )
-            );
-          }
-        );
-      }
-
-      document.getElementById("refreshBtn").addEventListener(
-        "click",
-        () => window.location.reload()
-      );
-
-    } catch (error) {
-      statusBox.textContent =
-        "❌ Ralat Firebase: " + error.message;
-    }
-  </script>
+startAdmin();
+</script>
 </body>
 </html>
